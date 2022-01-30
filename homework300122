@@ -1,0 +1,66 @@
+#include <unordered_map>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
+
+
+using namespace std;
+
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	unordered_map<int, string> listPeople;
+	
+	string path = "myFile.txt";
+
+	ifstream fin;
+
+	fin.open(path);
+
+	if (!fin.is_open()) {
+		cout << "Ошибка открытия файла!" << endl;
+	}
+	else {
+		string str;
+		int i, max, min;
+		min = 1;
+		max = 10;
+
+		while (getline(fin, str))
+		{
+			i = min + rand() % (max - min);
+			listPeople.emplace(i, str);
+			
+		}
+		srand(time(NULL));
+
+		
+	}
+
+	for (auto& x : listPeople)
+		cout << x.first << " : " << x.second << endl;
+
+
+	/*fin.close();
+
+
+	ofstream fout;
+
+	fout.open(path);
+
+	if (!fout.is_open())
+	{
+		cout << "Ошибка открытия файла!" << endl;
+	}
+	else {
+		fout << "Это наши данные";
+	}
+
+	fout.close();*/
+
+    return 0;
+}
