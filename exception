@@ -1,0 +1,46 @@
+#include <iostream>
+#include <exception>
+
+//серверная сторона
+
+
+/*int division (int a, int b) {
+	if (!b)throw std::invalid_argument("b argument was 0");//std::exception("b argument was 0"); // throw 1;
+	return a / b;
+}*/
+
+
+int division (int a, int b) {	
+		if (!b)throw std::make_exception_ptr (std::invalid_argument ("b argument was 0"));//std::exception("b argument was 0"); // throw 1;
+	return a / b;
+}
+
+//клиентская сторона
+int main()
+{
+	int q = 9;
+	int w = 0;
+	int c;
+	try {
+		c = division (q, w);
+	}
+	catch (int &er) {
+		std::cerr << "Error/ With code " << er;
+	}
+	
+	catch (std::invalid_argument& er) {
+		std::cerr << 3 << er.what ();
+	}
+
+	catch (std::exception* er) {
+		std::cerr << 2 << er->what ();
+	} 
+
+	catch (...) {
+		std::rethrow_exception (std::current_exception());
+	}
+
+	//::exit(1) завершение программы с кодом 1
+	//::set_terminate() настраиваемая функция завершения программы 
+	return 0;
+}
